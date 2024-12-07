@@ -30,7 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Center: 0.5
-    - _Radius: 0.4
-    - _Smooth: 0
+    - _Radius: 0.353
+    - _Smooth: 0.1
     m_Colors: []
   m_BuildTextureStacks: []
