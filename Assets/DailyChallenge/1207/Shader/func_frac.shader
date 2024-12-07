@@ -4,6 +4,7 @@ Shader "Unlit/func_frac"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Size ("Size", Range(0,0.5)) = 0.1
+        _Smooth ("Smooth", Range(0, 1)) = 0.01
     }
     SubShader
     {
@@ -37,6 +38,7 @@ Shader "Unlit/func_frac"
             float4 _MainTex_ST;
 
             float _Size;
+            float _Smooth;
 
             v2f vert (appdata v)
             {
@@ -58,6 +60,8 @@ Shader "Unlit/func_frac"
                 fixed4 col = tex2D(_MainTex, fuv);
                 return col;
                 */
+
+                /*
                 
                 i.uv *= 3;
                 // // 0->1
@@ -67,6 +71,39 @@ Shader "Unlit/func_frac"
                 float wCircle = floor(_Size/circle);
                 wCircle = clamp(wCircle, 0, 1);
                 return float4(wCircle, wCircle, wCircle, 1);
+                */
+
+                // 扩展思考，怎么画一个圆环？
+                float c = length(i.uv - 0.5);
+                // float circle = smoothstep(_Size - 0.1, _Size + 0.1, c);
+                float circle = floor(_Size/c);
+                // 圆环
+                if (circle >= 1)
+                {
+                    // 圆环内圆
+                    float c2 = length(i.uv - 0.5);
+                    float newRadius = _Size - 0.1;
+                    float circle2 = floor(newRadius/c2);
+                    // float smooth = .5;
+                    circle2 = smoothstep(c - _Smooth, c + _Smooth, newRadius);
+
+                    // 反转
+                    circle2 = 1 - circle2;
+
+                    circle = circle2;
+                }
+
+                // float c2 = length(i.uv - 0.5);
+                // float newRadius = _Size - 0.1;
+                // float circle2 = floor(newRadius/c2);
+                // float smooth = 0.1;
+                // circle2 = smoothstep(c - smooth, c + smooth, newRadius);
+
+                // // 反转
+                // circle2 = 1 - circle2;
+                // return float4(circle2.xxx, 1);
+
+                return float4(circle, circle, circle, 1);
             }
             ENDCG
         }
