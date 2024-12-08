@@ -57,6 +57,7 @@ Shader "Unlit/func_lerp"
                 return o;
             }
 
+            //如果我们为_Skin[n]的每个属性指定两个不同的纹理，则在这每种情况下，每个纹理都会有0.5f的透明度，最终混合在一起。
             fixed4 frag (v2f i) : SV_Target
             {
                 float4 skin01 = tex2D(_Skin01, i.uv_skin01);
