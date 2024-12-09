@@ -20,7 +20,6 @@ Shader "Unlit/func_diffuse"
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
-
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -62,6 +61,7 @@ Shader "Unlit/func_diffuse"
                 return o;
             }
 
+            //_WorldSpaceLightPos0和 _LightColor[n] 不同的是，没有必要将其声明为全局变量，因为它已经包含在 #include "UnityCG.cginc" 里了，我们可以直接把它作为函数的参数使用：
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
