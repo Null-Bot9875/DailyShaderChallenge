@@ -12,6 +12,7 @@ Shader "Unlit/func_diffuse"
 
         Pass
         {
+            // https://docs.unity3d.com/cn/Packages/com.unity.render-pipelines.universal@12.1/manual/urp-shaders/urp-shaderlab-pass-tags.html
             // urp 不支持 这样的LightMode
             // Tags { "LightMode" = "ForwardBase" }
             Tags { "LightMode" = "UniversalForward" }
