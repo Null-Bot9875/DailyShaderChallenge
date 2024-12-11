@@ -12,7 +12,9 @@ Shader "Unlit/func_diffuse"
 
         Pass
         {
-            Tags { "LightMode" = "ForwardBase" }
+            // urp 不支持 这样的LightMode
+            // Tags { "LightMode" = "ForwardBase" }
+            Tags { "LightMode" = "UniversalForward" }
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -20,6 +22,7 @@ Shader "Unlit/func_diffuse"
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
+
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -30,7 +33,7 @@ Shader "Unlit/func_diffuse"
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
+                // UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
                 float3 normal_world : TEXCOORD1;
             };
@@ -40,12 +43,12 @@ Shader "Unlit/func_diffuse"
 
             float _LightInt;
             float4 _LightColor0;
-
+            
             // LambertShading 函数返回了一个的三维向量，用来表示颜色。函数的输入参数有光源反射颜色（colorRefl RGB）、光源强度（lightInt [0, 1]）、模型表面法线（normal XYZ）和光源方向（lightDir XYZ）。
             float3 LambertShading(float3 colRefl,// Dr,光源反射颜色
-                                  float lightInt,// Dl 光源强度
-                                  float3 normal,// N 法线
-                                  float3 lightDir)// L 光线方向
+                float lightInt,// Dl 光源强度
+                float3 normal,// N 法线
+                float3 lightDir)// L 光线方向
             {
                 // tips:当两个向量是单位向量时，点积的值表示两个向量的夹角的余弦值
                 return colRefl * lightInt * max(0, dot(normal, lightDir));
@@ -56,12 +59,11 @@ Shader "Unlit/func_diffuse"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.normal_world = normalize(UnityObjectToWorldNormal(v.normal));
                 // UNITY_TRANSFER_FOG(o,o.vertex);
+                o.normal_world = normalize(UnityObjectToWorldNormal(v.normal));
                 return o;
             }
 
-            //_WorldSpaceLightPos0和 _LightColor[n] 不同的是，没有必要将其声明为全局变量，因为它已经包含在 #include "UnityCG.cginc" 里了，我们可以直接把它作为函数的参数使用：
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
