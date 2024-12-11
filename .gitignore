@@ -1,6 +1,9 @@
-/Library
-/Logs
+/DailyShaderChallenge.sln
+/Unity.RenderPipelines.Universal.Config.Editor.Tests.csproj
+/Unity.RenderPipelines.Universal.Config.Runtime.csproj
 /Temp
 /UserSettings
-/DailyShaderChallenge.sln
-/.vscode
+/Assembly-CSharp.csproj
+/Assembly-CSharp-Editor.csproj
+/Logs
+/Library

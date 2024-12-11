@@ -33,10 +33,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ReflectionDetail: 1
-    - _ReflectionExposure: 2.1
-    - _ReflectionIntensity: 1
-    - _ReflectionMetallic: 0.13
+    - _ReflectionDetail: 3.86
+    - _ReflectionExposure: 3
+    - _ReflectionIntensity: 0.932
+    - _ReflectionMetallic: 0.833
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
