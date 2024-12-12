@@ -71,9 +71,9 @@ Shader "Unlit/func_fresnel"
 
                 float3 viewDir = normalize(_WorldSpaceCameraPos - i.vertex_world);
                 float3 fresnel = FresnelEffect(i.normal_world, viewDir, _FresnelPower) * _FresnelIntensity;
-                return fixed4(fresnel,1);
-                // col.rgb += fresnel;
-                // return col;
+                // return fixed4(fresnel,1);
+                col.rgb += fresnel;
+                return col;
             }
             ENDCG
         }
